@@ -33,18 +33,21 @@ function ExpenseForm(props) {
   const newExpenseControl = [
     {
       label: "Title",
+      key: "title",
       value: enteredTitle,
       handler: titleChangeHandler,
       attributes: { type: "text" },
     },
     {
       label: "Amount",
+      key: "amount",
       value: enteredAmount,
       handler: amountChangeHandler,
       attributes: { type: "number", min: "0.01", step: "0.01" },
     },
     {
       label: "Date",
+      key: "date",
       handler: dateChangeHandler,
       value: enteredDate,
       attributes: { type: "date", min: "2019-01-01", max: "2022-12-31" },
@@ -55,7 +58,7 @@ function ExpenseForm(props) {
       <div className="new-expense__controls">
         {newExpenseControl.map((control) => {
           return (
-            <div className="new-expense__control">
+            <div className="new-expense__control" key={control.key}>
               <label>{control.label}</label>
               <input
                 {...control.attributes}
@@ -67,6 +70,7 @@ function ExpenseForm(props) {
         })}
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.hideForm}>Cancel</button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
