@@ -25,6 +25,7 @@ function App() {
       </main>
     </CartProvider>
   );
+ 
 }
-
+ console.log(App)
 export default App;
