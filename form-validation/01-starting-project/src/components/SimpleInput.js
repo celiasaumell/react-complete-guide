@@ -2,6 +2,8 @@ import { useState, useRef } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
   const nameInputRef = useRef();
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
@@ -9,14 +11,20 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
-
+    if (enteredName.trim() === "") {
+      setIsValid(false);
+      return;
+    }
+    setIsValid(true);
     console.log(nameInputRef.current.value);
-    setEnteredName("")
+    setEnteredName("");
   };
+
+  const nameInputClasses = isValid ? "form-control" : "form-control invalid";
 
   return (
     <form onSubmit={formSubmissionHandler}>
-      <div className="form-control">
+      <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
           type="text"
@@ -25,6 +33,7 @@ const SimpleInput = (props) => {
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
+        {!isValid && <p className="error-text">Name field must not be empty</p>}
       </div>
       <div className="form-actions">
         <button>Submit</button>
